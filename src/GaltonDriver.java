@@ -9,8 +9,6 @@ public class GaltonDriver {
     public static int wait = 0;
     public static int width, height;
     public static void main(String[] args) throws Exception {
-        System.out.println("Hi, Kate!!");        
-        System.out.println("begin");
         mainframe.setSize(1920, 800);
         mainframe.setResizable(false);
         
@@ -33,7 +31,7 @@ public class GaltonDriver {
             }
         }.start();
 
-        //Code used for sorting
+        //Code used for the main action:
         do {
             mainCode();
             System.out.println("BRO");
@@ -48,16 +46,15 @@ public class GaltonDriver {
         mainframe.setSize(width, height);
 
 
-        // Lilypad lily = Lilypad.drawMap(new Pointy(0, 0));
+        // Make the Galton Board
         Galton gobj = new Galton();
-        mainframe.add(gobj);
-
+        mainframe.add(gobj); //Put it into the java graphics machine
         mainframe.setVisible(true);
 
         //0 represents keep going
         wait = 0;
 
-        //We run one thread for the sort
+        //We run one thread for the action
         new Thread() {
             public void run() {
                 try {
@@ -65,7 +62,7 @@ public class GaltonDriver {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                gobj.begin();
+                gobj.begin(); //Begin the simulation
                 //1 represents repeat, 2 represents stop
                 // wait = (JOptionPane.showConfirmDialog(mainframe, "Go again?", "Replay", JOptionPane.YES_NO_OPTION) == 0) ? 1 : 2;
                 
@@ -83,10 +80,6 @@ public class GaltonDriver {
     // Start of recursive file hunter
     // Made to find files no matter where they are in project directory
     public static File fileHunt(String filename) {
-        // System.out.println();
-        // System.out.println("UP");
-        // System.out.println(dir.getAbsolutePath());
-
         File dir = new File(new File("").getAbsolutePath() + "\\");
         return recurFileHunt(dir.getAbsolutePath(), filename);
     }
