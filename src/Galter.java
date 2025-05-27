@@ -3,20 +3,21 @@ import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class GaltonDriver {
+public class Galter {
     final static JFrame mainframe = new JFrame();
     final static int delay = 20;
     public static int wait = 0;
-    public static int width, height;
+    public static int width, height, realWidth;
     public static void main(String[] args) throws Exception {
-        mainframe.setSize(1920, 800);
-        mainframe.setResizable(false);
+        // mainframe.setSize(1920, 800);
+        mainframe.setResizable(true);
         
         mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        GaltonDriver.width = 960; //requestInt("What width is your screen (in pixels)?", 800, 3840);
-        GaltonDriver.height = 1000; //requestInt("What height is your screen? (in pixels)", 800, 1280);
-
+        Galter.width = 720; //requestInt("What width is your screen (in pixels)?", 800, 3840);
+        Galter.height = 960; //requestInt("What height is your screen? (in pixels)", 800, 1280);
+        Galter.realWidth = Galter.width - 16; //Actual width of the window
+        Ball b = new Ball(1,2);
         //We run a thread for the Graphics.
         new Thread() {
             public void run() {
@@ -43,8 +44,8 @@ public class GaltonDriver {
     public static void mainCode() throws InterruptedException {
         mainframe.setVisible(false);
 
-        mainframe.setSize(width, height);
-
+        mainframe.setSize(Galter.width, Galter.height);
+        System.out.println(Galter.width + ", " + Galter.height);
 
         // Make the Galton Board
         Galton gobj = new Galton();
@@ -65,7 +66,6 @@ public class GaltonDriver {
                 gobj.begin(); //Begin the simulation
                 //1 represents repeat, 2 represents stop
                 // wait = (JOptionPane.showConfirmDialog(mainframe, "Go again?", "Replay", JOptionPane.YES_NO_OPTION) == 0) ? 1 : 2;
-                
             }
         }.start();
 
