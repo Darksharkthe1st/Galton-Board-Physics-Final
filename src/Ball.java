@@ -17,6 +17,7 @@ public class Ball extends Grobject {
     private Vector lastPose = new Vector(0, 0);
     private ArrayList<Grobject> allObjects;
     private static ArrayList<Ball> done = new ArrayList<>();
+    public static ArrayList<Pillar> pillars;
 
     public Ball(double x, double y, ArrayList<Grobject> allObjects) {
         super(Color.black, Color.red, new Ellipse2D.Double(x - ballSize / 2, y - ballSize / 2, ballSize, ballSize));
@@ -78,21 +79,21 @@ public class Ball extends Grobject {
             // }
             force = new Vector(0, 0.05);
             boolean fullyDone = false;
-            if (this.position.y > 800)
-            {
-                for (Ball b : done) {
-                    if (Math.abs(Vector.between(b.position, this.position).getMagnitude()) < ballSize) {
-                        System.out.println(Vector.between(b.position, this.position));
-                        if (!fullyDone) {
-                            fullyDone = true;
-                        } else {
-                            this.moveTo(Vector.plus(position,velocity));
-                            done.add(this);
-                            return;
-                        }
-                    }
-                }
-            }
+            // if (this.position.y > 800)
+            // {
+            //     for (Ball b : done) {
+            //         if (Math.abs(Vector.between(b.position, this.position).getMagnitude()) < ballSize) {
+            //             System.out.println(Vector.between(b.position, this.position));
+            //             if (!fullyDone) {
+            //                 fullyDone = true;
+            //             } else {
+            //                 this.moveTo(Vector.plus(position,velocity));
+            //                 finishMe();
+            //                 return;
+            //             }
+            //         }
+            //     }
+            // }
 
             Vector now = collide();
             if (now != null) {
@@ -108,6 +109,16 @@ public class Ball extends Grobject {
                 }
             }
             // TODO: Add element of randomness here.
+        }
+        finishMe();
+    }
+
+    public void finishMe() {
+        for (Pillar p : pillars) {
+            if (p.containsSpot(this.position.x)) {
+                p.addOne();
+                break;
+            }
         }
         done.add(this);
     }
@@ -142,18 +153,22 @@ public class Ball extends Grobject {
             return Vector.withMagnitude(Vector.between(((Peg) brog).pose, this.lastPose), Math.random() * 0.05 + 0.2);
         }
 
-        Rectangle2D bounds = brog.internalObj.getBounds2D();
-        PathIterator p = new Ellipse2D.Double(position.x - ballSize, position.y - ballSize, ballSize * 2.0,
-                ballSize * 2.0).getPathIterator(null);
-        while (!p.isDone()) {
-            double[] coords = new double[6];
-            p.currentSegment(coords);
-            if (bounds.contains(coords[0], coords[1])) {
-                Vector direction = Vector.between(new Vector(coords[0], coords[1]), lastPose);
-                return Vector.withMagnitude(direction, -0.5);
-            }
-            p.next();
-        }
+        // Rectangle2D bounds = brog.internalObj.getBounds2D();
+        // PathIterator p = new Ellipse2D.Double(position.x - ballSize, position.y - ballSize, ballSize * 2.0,
+        //         ballSize * 2.0).getPathIterator(null);
+        // while (!p.isDone()) {
+        //     double[] coords = new double[6];
+        //     p.currentSegment(coords);
+        //     if (bounds.contains(coords[0], coords[1])) {
+        //         Vector direction = Vector.between(new Vector(coords[0], coords[1]), lastPose);
+        //         return Vector.withMagnitude(direction, -0.5);
+        //     }
+        //     p.next();
+        // }
         return null;
+    }
+
+    public int doneSize() {
+        return done.size();
     }
 }

@@ -10,10 +10,14 @@ public class Galton extends JPanel {
     ArrayList<Ball> balls = new ArrayList<>();
     public void begin() {
         int pillarHeight = 400;
-        int count = 10;
+        int count = 20;
         int pillarWidth = 20;
+        Pillar.increment = (Galter.realWidth) / count;
+        Ball.pillars = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            immovableObjs.add(new Grobject(new Rectangle2D.Double(((Galter.realWidth) / count) * i + ((Galter.realWidth) / count) / 2 - pillarWidth / 2, Galter.height - pillarHeight, pillarWidth, pillarHeight)));    
+            // immovableObjs.add(new Grobject());
+            Ball.pillars.add(new Pillar(((Galter.realWidth) / count) * i + ((Galter.realWidth) / count) / 2 - pillarWidth / 2));
+            immovableObjs.add(Ball.pillars.get(Ball.pillars.size()-1)); 
         }
         
         count = 10;
@@ -39,8 +43,8 @@ public class Galton extends JPanel {
         immovableObjs.add(new Grobject(new Rectangle2D.Double(Galter.width,0,10,Galter.height)));
         immovableObjs.add(new Grobject(new Rectangle2D.Double(0,Galter.height,Galter.width, 100)));
         
-        
-        for (int i = 0; i < 500; i++) {
+        int variation = 30;
+        for (int i = 0; i < 1000; i++) {
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
@@ -48,9 +52,10 @@ public class Galton extends JPanel {
                 e.printStackTrace();
             }
             synchronized(balls) {
-            balls.add(new Ball(Math.random() * 100 - 50 + Galter.width/2,100, immovableObjs));
+            balls.add(new Ball(Math.random() * variation - variation/2 + Galter.width/2-20,100, immovableObjs));
             }
         }
+        
     }
 
     public void paintComponent(Graphics g) {

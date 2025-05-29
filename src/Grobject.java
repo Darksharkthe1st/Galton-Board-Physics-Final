@@ -74,9 +74,7 @@ public class Grobject {
     public static void drawMany(Graphics g, ArrayList<Grobject> objects) {
         Graphics2D gra = (Graphics2D)g;
         for (Grobject i : objects) {
-            gra.setColor(i.fillColor);
-            gra.setPaint(i.borderColor);
-            gra.fill(i.internalObj);
+            i.drawMe(gra);
         }
     }
 
