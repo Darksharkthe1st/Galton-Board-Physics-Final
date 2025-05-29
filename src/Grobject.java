@@ -38,14 +38,14 @@ public class Grobject {
     /** Create an immovable object from an array of Pointy's, assuming all colors are black
      * @param points Array of Pointy variables representing the positions in the polygon
      */
-    public Grobject(Pointy[] points) {
+    public Grobject(Vector[] points) {
         this(Color.black, Color.black, points);
     }
 
     /** Create an immovable object from an array of Pointy's
      * @param points Array of Pointy variables representing the positions in the polygon
      */
-    public Grobject(Color fillColor, Color borderColor, Pointy[] points) {
+    public Grobject(Color fillColor, Color borderColor, Vector[] points) {
         
         int[] xpoints = new int[points.length];
         int[] ypoints = new int[points.length];
@@ -67,7 +67,24 @@ public class Grobject {
         gra.fill(internalObj);
     }
 
+    /** Draws many objects outlined
+     * @param g The graphics interface to draw upon
+     * @param objects The objects to be drawn
+     */
     public static void drawMany(Graphics g, ArrayList<Grobject> objects) {
+        Graphics2D gra = (Graphics2D)g;
+        for (Grobject i : objects) {
+            gra.setColor(i.fillColor);
+            gra.setPaint(i.borderColor);
+            gra.fill(i.internalObj);
+        }
+    }
+
+    /** Draws many objects outlined
+     * @param g The graphics interface to draw upon
+     * @param objects The objects to be drawn
+     */
+    public static void drawManyBalls(Graphics g, ArrayList<Ball> objects) {
         Graphics2D gra = (Graphics2D)g;
         for (Grobject i : objects) {
             gra.setColor(i.fillColor);
@@ -98,6 +115,14 @@ public class Grobject {
 
     public void setInternalObj(Shape internalObj) {
         this.internalObj = internalObj;
+    }
+
+    public double getX() {
+        return this.internalObj.getBounds2D().getX();
+    }
+
+    public double getY() {
+        return this.internalObj.getBounds2D().getY();
     }
 
     //TODO: Implement

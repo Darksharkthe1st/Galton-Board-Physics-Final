@@ -11,13 +11,11 @@ public class Galter {
     public static void main(String[] args) throws Exception {
         // mainframe.setSize(1920, 800);
         mainframe.setResizable(true);
-        
         mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Galter.width = 720; //requestInt("What width is your screen (in pixels)?", 800, 3840);
         Galter.height = 960; //requestInt("What height is your screen? (in pixels)", 800, 1280);
         Galter.realWidth = Galter.width - 16; //Actual width of the window
-        Ball b = new Ball(1,2);
         //We run a thread for the Graphics.
         new Thread() {
             public void run() {
