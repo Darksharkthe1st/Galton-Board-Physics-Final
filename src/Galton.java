@@ -40,7 +40,7 @@ public class Galton extends JPanel {
         immovableObjs.add(new Grobject(new Rectangle2D.Double(0,Galter.height,Galter.width, 100)));
         
         
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 500; i++) {
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
@@ -48,7 +48,7 @@ public class Galton extends JPanel {
                 e.printStackTrace();
             }
             synchronized(balls) {
-            balls.add(new Ball(Math.random() * Galter.width,100, immovableObjs));
+            balls.add(new Ball(Math.random() * 100 - 50 + Galter.width/2,100, immovableObjs));
             }
         }
     }

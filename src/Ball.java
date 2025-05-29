@@ -47,7 +47,7 @@ public class Ball extends Grobject {
      */
     public void moveTo(Vector v) {
         this.position = v;
-        this.internalObj = new Ellipse2D.Double(v.x - ballSize/2, v.y-ballSize/2, ballSize, ballSize);
+        this.internalObj = new Ellipse2D.Double(v.x - ballSize / 2, v.y - ballSize / 2, ballSize, ballSize);
     }
 
     /**
@@ -59,7 +59,6 @@ public class Ball extends Grobject {
         LinkedList<Double> queuedTiming = new LinkedList<>();
         Vector current = null;
         int collideTime = 0;
-        loopy:
         while (position.y < Galter.height - 50) {
             try {
                 Thread.sleep(delay);
@@ -68,21 +67,30 @@ public class Ball extends Grobject {
                 e.printStackTrace();
             }
             lastPose = position;
-            if (position.y < Galter.height - 300);
+            if (position.y < Galter.height - 300)
+                ;
             this.moveTo(Vector.plus(position, velocity));
 
-            
             velocity.add(Vector.scale(force, 1 / mass));
 
             // if (velocity.getMagnitude() >10) {
-            //     velocity = Vector.withMagnitude(velocity, 10);
+            // velocity = Vector.withMagnitude(velocity, 10);
             // }
             force = new Vector(0, 0.05);
-
-            for (Ball b:done) {
-                if (Vector.between(b.position, this.position).getMagnitude() < ballSize) {
-                    done.add(this);
-                    return;
+            boolean fullyDone = false;
+            if (this.position.y > 800)
+            {
+                for (Ball b : done) {
+                    if (Math.abs(Vector.between(b.position, this.position).getMagnitude()) < ballSize) {
+                        System.out.println(Vector.between(b.position, this.position));
+                        if (!fullyDone) {
+                            fullyDone = true;
+                        } else {
+                            this.moveTo(Vector.plus(position,velocity));
+                            done.add(this);
+                            return;
+                        }
+                    }
                 }
             }
 
@@ -106,7 +114,7 @@ public class Ball extends Grobject {
 
     public Vector collide() {
         if (this.position.y > Galter.height - 200) {
-            return Vector.scale(this.force, -1); //Oppose gravity!
+            return Vector.scale(this.force, -1); // Oppose gravity!
         }
 
         Grobject collideWith = null;
@@ -129,13 +137,14 @@ public class Ball extends Grobject {
     }
 
     public Vector collision(Grobject brog) {
-       
+
         if (brog instanceof Peg) {
-            return Vector.withMagnitude(Vector.between(((Peg)brog).pose, this.lastPose), Math.random() * 0.05 + 0.2);
+            return Vector.withMagnitude(Vector.between(((Peg) brog).pose, this.lastPose), Math.random() * 0.05 + 0.2);
         }
 
         Rectangle2D bounds = brog.internalObj.getBounds2D();
-        PathIterator p = new Ellipse2D.Double(position.x - ballSize, position.y - ballSize, ballSize * 2.0, ballSize * 2.0).getPathIterator(null);
+        PathIterator p = new Ellipse2D.Double(position.x - ballSize, position.y - ballSize, ballSize * 2.0,
+                ballSize * 2.0).getPathIterator(null);
         while (!p.isDone()) {
             double[] coords = new double[6];
             p.currentSegment(coords);
