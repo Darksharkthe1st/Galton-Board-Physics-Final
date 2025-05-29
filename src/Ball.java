@@ -19,9 +19,13 @@ public class Ball extends Grobject {
     private static ArrayList<Ball> done = new ArrayList<>();
     public static ArrayList<Pillar> pillars;
 
+    //For user adjustment
+    public static double xBias = 0;
+    public static double gravity = 0.05;
+
     public Ball(double x, double y, ArrayList<Grobject> allObjects) {
         super(Color.black, Color.red, new Ellipse2D.Double(x - ballSize / 2, y - ballSize / 2, ballSize, ballSize));
-        this.force = new Vector(0, 0.05); // Constant force of gravity -- other forces build on this
+        this.force = new Vector(0, gravity); // Constant force of gravity -- other forces build on this
         this.velocity = new Vector(0, 0); // Start off stationary
         this.position = new Vector(x, y);
         this.allObjects = allObjects;
@@ -77,7 +81,7 @@ public class Ball extends Grobject {
             // if (velocity.getMagnitude() >10) {
             // velocity = Vector.withMagnitude(velocity, 10);
             // }
-            force = new Vector(0, 0.05);
+            force = new Vector(0, gravity);
             boolean fullyDone = false;
             // if (this.position.y > 800)
             // {
@@ -98,6 +102,7 @@ public class Ball extends Grobject {
             Vector now = collide();
             if (now != null) {
                 current = now;
+                current.add(new Vector(xBias, 0));
                 collideTime = 3;
             }
             if (current != null) {
@@ -108,6 +113,16 @@ public class Ball extends Grobject {
                     current = null;
                 }
             }
+
+            while (Galton.paused) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
             // TODO: Add element of randomness here.
         }
         finishMe();
@@ -153,22 +168,26 @@ public class Ball extends Grobject {
             return Vector.withMagnitude(Vector.between(((Peg) brog).pose, this.lastPose), Math.random() * 0.05 + 0.2);
         }
 
-        // Rectangle2D bounds = brog.internalObj.getBounds2D();
-        // PathIterator p = new Ellipse2D.Double(position.x - ballSize, position.y - ballSize, ballSize * 2.0,
-        //         ballSize * 2.0).getPathIterator(null);
-        // while (!p.isDone()) {
-        //     double[] coords = new double[6];
-        //     p.currentSegment(coords);
-        //     if (bounds.contains(coords[0], coords[1])) {
-        //         Vector direction = Vector.between(new Vector(coords[0], coords[1]), lastPose);
-        //         return Vector.withMagnitude(direction, -0.5);
-        //     }
-        //     p.next();
-        // }
+        if (brog instanceof Pillar) {
+            return null;
+        }
+
+        Rectangle2D bounds = brog.internalObj.getBounds2D();
+        PathIterator p = new Ellipse2D.Double(position.x - ballSize, position.y - ballSize, ballSize * 2.0,
+                ballSize * 2.0).getPathIterator(null);
+        while (!p.isDone()) {
+            double[] coords = new double[6];
+            p.currentSegment(coords);
+            if (bounds.contains(coords[0], coords[1])) {
+                Vector direction = Vector.between(new Vector(coords[0], coords[1]), lastPose);
+                return Vector.withMagnitude(direction, -0.5);
+            }
+            p.next();
+        }
         return null;
     }
 
-    public int doneSize() {
+    public static int doneSize() {
         return done.size();
     }
 }

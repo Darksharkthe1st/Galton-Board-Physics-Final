@@ -8,15 +8,22 @@ import java.util.ArrayList;
 public class Galton extends JPanel {
     ArrayList<Grobject> immovableObjs = new ArrayList<>();
     ArrayList<Ball> balls = new ArrayList<>();
+
+    /* Variables for tweaking */
+    public static boolean paused = true;
+    public static double variation = 50;
+    public static double startingX = Galter.width/2-20;
+    public static int totalBalls = 40;
+
     public void begin() {
-        int pillarHeight = 400;
+        // System.out.println(startX);
         int count = 20;
         int pillarWidth = 20;
         Pillar.increment = (Galter.realWidth) / count;
         Ball.pillars = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             // immovableObjs.add(new Grobject());
-            Ball.pillars.add(new Pillar(((Galter.realWidth) / count) * i + ((Galter.realWidth) / count) / 2 - pillarWidth / 2));
+            Ball.pillars.add(new Pillar(((Galter.realWidth) / count) * i + ((Galter.realWidth) / count) / 2));
             immovableObjs.add(Ball.pillars.get(Ball.pillars.size()-1)); 
         }
         
@@ -43,19 +50,34 @@ public class Galton extends JPanel {
         immovableObjs.add(new Grobject(new Rectangle2D.Double(Galter.width,0,10,Galter.height)));
         immovableObjs.add(new Grobject(new Rectangle2D.Double(0,Galter.height,Galter.width, 100)));
         
-        int variation = 30;
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < totalBalls; i++) {
+            while (paused) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
             try {
-                Thread.sleep(5);
+                Thread.sleep(Galter.delay/2);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             synchronized(balls) {
-            balls.add(new Ball(Math.random() * variation - variation/2 + Galter.width/2-20,100, immovableObjs));
+            balls.add(new Ball(Math.random() * variation - variation/2 + startingX,100, immovableObjs));
+            // System.out.println(startX);
             }
         }
-        
+        // while (Ball.doneSize() < balls.size() - 10) {
+        //     try {
+        //         Thread.sleep(200);
+        //     } catch (InterruptedException e) {
+        //         // TODO Auto-generated catch block
+        //         e.printStackTrace();
+        //     }
+        // }
     }
 
     public void paintComponent(Graphics g) {

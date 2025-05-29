@@ -10,9 +10,9 @@ public class Pillar extends Grobject {
     private final double xPos;
     public static int increment = 0;
     private int runningCount = 0;
-    public static double scale = 5;
+    public static double scale = 1000;
     public Pillar(double x) {
-        super(Color.black, Color.black, new Rectangle2D.Double(x, Galter.height - pillarHeight, pillarWidth, pillarHeight));
+        super(Color.black, Color.black, new Rectangle2D.Double(x - pillarWidth/2, Galter.height - pillarHeight, pillarWidth, pillarHeight));
         this.xPos = x;
     }
 
@@ -29,7 +29,7 @@ public class Pillar extends Grobject {
 
     public void addOne() {
         runningCount++;
-        while (runningCount * scale > pillarHeight - 100) {
+        while (runningCount * scale > pillarHeight - 50) {
             scale -= 0.01;
         }
     }
