@@ -79,12 +79,12 @@ public class Ball extends Grobject {
             // }
             force = new Vector(0, 0.05);
 
-            // for (Ball b:done) {
-            //     if (Vector.between(b.position, this.position).getMagnitude() < ballSize) {
-            //         done.add(this);
-            //         return;
-            //     }
-            // }
+            for (Ball b:done) {
+                if (Vector.between(b.position, this.position).getMagnitude() < ballSize) {
+                    done.add(this);
+                    return;
+                }
+            }
 
             Vector now = collide();
             if (now != null) {
