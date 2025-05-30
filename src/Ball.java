@@ -85,9 +85,10 @@ public class Ball extends Grobject {
             boolean fullyDone = false;
             // if (this.position.y > 800)
             // {
+            //     synchronized(done) {
             //     for (Ball b : done) {
             //         if (Math.abs(Vector.between(b.position, this.position).getMagnitude()) < ballSize) {
-            //             System.out.println(Vector.between(b.position, this.position));
+            //             // System.out.println(Vector.between(b.position, this.position));
             //             if (!fullyDone) {
             //                 fullyDone = true;
             //             } else {
@@ -97,6 +98,7 @@ public class Ball extends Grobject {
             //             }
             //         }
             //     }
+            // }
             // }
 
             Vector now = collide();
@@ -135,7 +137,9 @@ public class Ball extends Grobject {
                 break;
             }
         }
+        synchronized(done) {
         done.add(this);
+        }
     }
 
     public Vector collide() {

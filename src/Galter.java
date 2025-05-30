@@ -205,7 +205,7 @@ public class Galter {
 
         mainframe.setSize(Galter.width, Galter.height);
         System.out.println(Galter.width + ", " + Galter.height);
-        Galton.totalBalls = requestInt("How many balls would you like to simulate?", 1, 20000);
+        Galton.totalBalls = requestInt("How many balls would you like to simulate?", 1, 40000000);
         
 
         // Make the Galton Board

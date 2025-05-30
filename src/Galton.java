@@ -17,7 +17,7 @@ public class Galton extends JPanel {
 
     public void begin() {
         // System.out.println(startX);
-        int count = 20;
+        int count = 30;
         int pillarWidth = 20;
         Pillar.increment = (Galter.realWidth) / count;
         Ball.pillars = new ArrayList<>();
