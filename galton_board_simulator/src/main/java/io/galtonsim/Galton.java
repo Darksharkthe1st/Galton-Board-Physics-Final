@@ -1,3 +1,5 @@
+package io.galtonsim;
+
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -17,8 +19,7 @@ public class Galton extends JPanel {
 
     public void begin() {
         // System.out.println(startX);
-        int count = 30;
-        int pillarWidth = 20;
+        int count = 20;
         Pillar.increment = (Galter.realWidth) / count;
         Ball.pillars = new ArrayList<>();
         for (int i = 0; i < count; i++) {

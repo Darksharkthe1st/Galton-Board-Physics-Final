@@ -1,3 +1,5 @@
+package io.galtonsim;
+
 import java.awt.event.MouseListener;
 import java.io.File;
 

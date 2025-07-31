@@ -1,3 +1,5 @@
+package io.galtonsim;
+
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 
