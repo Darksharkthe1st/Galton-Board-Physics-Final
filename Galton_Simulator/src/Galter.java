@@ -1,4 +1,5 @@
-package io.galtonsim;
+package src;
+
 
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -13,8 +14,6 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import org.w3c.dom.events.MouseEvent;
 
 public class Galter {
     final static JFrame mainframe = new JFrame();
@@ -238,6 +237,9 @@ public class Galter {
         while (wait == 0) {
             Thread.sleep(10);
         }
+        
+        //Reset the pillars
+        Ball.reset();
 
         // Remove the finished graphics
         mainframe.remove(gobj);

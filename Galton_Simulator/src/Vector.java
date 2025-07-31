@@ -1,6 +1,8 @@
-package io.galtonsim;
-
 //Custom class to represent points as doubles
+package src;
+
+
+
 public class Vector {
     double x, y;
 

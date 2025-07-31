@@ -1,11 +1,9 @@
-package io.galtonsim;
+package src;
 
 import java.awt.Color;
-import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -37,6 +35,13 @@ public class Ball extends Grobject {
             }
         }.start();
     }
+    
+    public static void reset() {
+    	for (Pillar p : pillars) {
+    		p.reset();
+    	}
+    	done = new ArrayList<>();
+    }
 
     /**
      * Applies a force on the object, causing an acceleration
@@ -62,8 +67,8 @@ public class Ball extends Grobject {
      * physics.
      */
     public void act() {
-        LinkedList<Vector> queuedForces = new LinkedList<>();
-        LinkedList<Double> queuedTiming = new LinkedList<>();
+        new LinkedList<>();
+        new LinkedList<>();
         Vector current = null;
         int collideTime = 0;
         while (position.y < Galter.height - 50) {
@@ -84,25 +89,6 @@ public class Ball extends Grobject {
             // velocity = Vector.withMagnitude(velocity, 10);
             // }
             force = new Vector(0, gravity);
-            boolean fullyDone = false;
-            // if (this.position.y > 800)
-            // {
-            //     synchronized(done) {
-            //     for (Ball b : done) {
-            //         if (Math.abs(Vector.between(b.position, this.position).getMagnitude()) < ballSize) {
-            //             // System.out.println(Vector.between(b.position, this.position));
-            //             if (!fullyDone) {
-            //                 fullyDone = true;
-            //             } else {
-            //                 this.moveTo(Vector.plus(position,velocity));
-            //                 finishMe();
-            //                 return;
-            //             }
-            //         }
-            //     }
-            // }
-            // }
-
             Vector now = collide();
             if (now != null) {
                 current = now;

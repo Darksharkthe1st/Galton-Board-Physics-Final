@@ -1,15 +1,12 @@
-package io.galtonsim;
+package src;
 
-import java.awt.BasicStroke;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.List;
 import java.awt.Polygon;
 import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
-import java.util.Arrays;;
+import java.util.ArrayList;;
 
 public class Grobject {
     protected Color fillColor;

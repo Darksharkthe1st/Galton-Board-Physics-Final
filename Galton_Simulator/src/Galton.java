@@ -1,14 +1,17 @@
-package io.galtonsim;
+package src;
+
 
 import javax.swing.JPanel;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Galton extends JPanel {
-    ArrayList<Grobject> immovableObjs = new ArrayList<>();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4509939773080136385L;
+	ArrayList<Grobject> immovableObjs = new ArrayList<>();
     ArrayList<Ball> balls = new ArrayList<>();
 
     /* Variables for tweaking */

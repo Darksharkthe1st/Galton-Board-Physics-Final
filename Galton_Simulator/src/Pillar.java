@@ -1,9 +1,8 @@
-package io.galtonsim;
+package src;
+
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
 public class Pillar extends Grobject {
@@ -25,6 +24,11 @@ public class Pillar extends Grobject {
         g.setColor(new Color(0,0,255,150));
         g.fillRect((int)xPos, (int)(Galter.height - 50 - runningCount * scale), (int)increment, (int)(runningCount * scale));
         // System.out.println(xPos + ": " + runningCount);
+    }
+    
+    public void reset() {
+        runningCount = 0;
+        scale = 1000;
     }
 
 
